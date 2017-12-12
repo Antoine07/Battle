@@ -15,7 +15,6 @@ SPEC = {
     105: "+4", 106 : "+4", 107: "+4", 108 :"+4"
 }
 
-
 """
 Fonctions utiles
 """
@@ -201,4 +200,43 @@ def is_playable(hand, pic):
     hand.remove(res)
 
     return res
+
+def init(cards):
+
+    init = {
+    'total_cards' : 108,
+    'number_player' : 0,
+    'number_player_cards' : 0,
+    'players' : [],
+    'pickaxe' : []
+    }
+
+    if len(cards) != 108:
+        raise ValueError("Le nombre de carte n'est pas bon pour l'initialisation du jeu")
+    
+    nb_player = input("Nombre de joueur \n")
+
+    while nb_player.isdigit() == False:
+        nb_player = input("Nombre de joueur, un entier svp \n")
+    
+    nb_player = int(nb_player)
+    init['number_player'] = nb_player
+
+    number_player_cards = input("Nombre de cartes par joueur \n")
+
+    while number_player_cards.isdigit() == False or (nb_player * int(number_player_cards) > 108):
+        number_player_cards = input("Nombre de cartes par joueur, un entier svp ou un nombre possible \n")
+    
+    number_player_cards = int(number_player_cards)
+    init['number_player_cards'] = number_player_cards
+    
+    for num in range(1, nb_player + 1):
+        name_player = input("Donnez le nom du joueur {} \n".format(num))
+        player_cards = cards[0:number_player_cards]
+        del cards[0:number_player_cards]
+        init['players'].append({'name' : name_player, 'cards' : player_cards, 'nb_cards' : number_player_cards })
+
+    init['pickaxe'] = cards
+    
+    return init
 
